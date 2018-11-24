@@ -14,8 +14,7 @@ from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import embedding_ops
 from tensorflow.python.ops import math_ops
 from tensorflow.python.ops import nn_ops
-# from tensorflow.python.ops import rnn
-from tensorflow.contrib import rnn
+from tensorflow.python.ops import rnn
 from tensorflow.python.ops import rnn_cell
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
@@ -1122,11 +1121,14 @@ def embedding_attention_seq2seq(encoder_inputs,
             scope or "embedding_attention_seq2seq", dtype=dtype) as scope:
         dtype = scope.dtype
         # Encoder.
+
         # encoder_cell = rnn_cell.EmbeddingWrapper(
         encoder_cell = core_rnn_cell.EmbeddingWrapper(
                 en_cell, embedding_classes=num_encoder_symbols,
                 embedding_size=embedding_size)
-        encoder_outputs, encoder_state = rnn.rnn(
+
+        encoder_outputs, encoder_state = tf.contrib.rnn(
+        # encoder_outputs, encoder_state = rnn.rnn(
                 encoder_cell, encoder_inputs, dtype=dtype)
 
         # First calculate a concatenation of encoder outputs to put attention on.
