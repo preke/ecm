@@ -1127,8 +1127,9 @@ def embedding_attention_seq2seq(encoder_inputs,
                 en_cell, embedding_classes=num_encoder_symbols,
                 embedding_size=embedding_size)
 
-        encoder_outputs, encoder_state = tf.contrib.rnn(
+
         # encoder_outputs, encoder_state = rnn.rnn(
+        encoder_outputs, encoder_state = tf.contrib.rnn(
                 encoder_cell, encoder_inputs, dtype=dtype)
 
         # First calculate a concatenation of encoder outputs to put attention on.
