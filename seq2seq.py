@@ -21,6 +21,7 @@ from tensorflow.python.util import nest
 from tensorflow.contrib.rnn.python.ops import core_rnn_cell
 import tensorflow as tf
 import rnn_cell as my_rnn_cell
+
 # TODO(ebrevdo): Remove once _linear is fully deprecated.
 # linear = rnn_cell._linear    # pylint: disable=protected-access
 linear = core_rnn_cell._Linear
@@ -1120,7 +1121,8 @@ def embedding_attention_seq2seq(encoder_inputs,
             scope or "embedding_attention_seq2seq", dtype=dtype) as scope:
         dtype = scope.dtype
         # Encoder.
-        encoder_cell = rnn_cell.EmbeddingWrapper(
+        # encoder_cell = rnn_cell.EmbeddingWrapper(
+        encoder_cell = core_rnn_cell.EmbeddingWrapper(
                 en_cell, embedding_classes=num_encoder_symbols,
                 embedding_size=embedding_size)
         encoder_outputs, encoder_state = rnn.rnn(
